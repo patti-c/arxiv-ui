@@ -4,12 +4,17 @@ import { Home, Articles, Authors } from './components'
 import {
     BrowserRouter as Router,
     Switch,
-    Route
+    Route,
+    Link
 } from 'react-router-dom';
+import home from './assets/home.png';
 
 function App() {
   return (
       <Router>
+          <Link to="/">
+              <img style={{height: '2em', margin: '.5em'}} src={home} alt="home-icon"/>
+          </Link>
         <Switch>
             <Route exact path="/">
                 <Home/>

@@ -2,3 +2,4 @@ Flask~=1.1
 requests~=2.25
 feedparser~=6.0
 python-dateutil~=2.8
+flask_cors~=3.0

@@ -6,9 +6,11 @@ from .util.constants import ARXIV_BULK_URL_BASE, ARTICLES_SEARCH, INDEX_TEXT, AR
 from time import sleep
 from dateutil import parser
 from datetime import datetime
+from flask_cors import CORS, cross_origin
 
 
 app = Flask(__name__)
+CORS(app, support_credentials=True)
 
 
 @app.route('/')
@@ -16,20 +18,32 @@ def index():
     return INDEX_TEXT
 
 
-@app.route('/api/v1/resources/articles')
 @handles_exceptions_gracefully
+@app.route('/api/v1/resources/articles')
+@cross_origin(supports_credentials=True)
 def articles():
     payload = {
               'start': 0,
-              'max_results': 1000,
+              'max_results': 10,
               'sortBy': 'submittedDate',
               'sortOrder': 'ascending'}
     entries = arxiv_fetch(ARXIV_BULK_URL_BASE + ARTICLES_SEARCH, params=payload).get('entries', [])
-    return jsonify(entries)
+    formatted_entries = format_articles(entries)
+    return jsonify(formatted_entries)
 
 
-@app.route('/api/v1/resources/authors')
+def format_articles(entries):
+    # Strips out data that the front end doesn't need.
+    return [filter_out_undesired_keys(entry, ('author', 'authors', 'summary', 'title')) for entry in entries]
+
+
+def filter_out_undesired_keys(d, desired_keys):
+    return {key: d[key] for key in desired_keys}
+
+
 @handles_exceptions_gracefully
+@app.route('/api/v1/resources/authors')
+@cross_origin(supports_credentials=True)
 def authors():
     author_name = request.args.get('name')
     if author_name:
