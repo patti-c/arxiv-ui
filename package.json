@@ -1,0 +1,16 @@
+{
+  "name": "arxiv-ui",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "patti-c <patti.webdev@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^6.0.2"
+  },
+  "scripts": {
+    "install": "pip install -r ./server/requirements.txt",
+    "start": "concurrently \"yarn client\" \"yarn server\"",
+    "client": "cd client && yarn start",
+    "server": "FLASK_APP=server flask run"
+  }
+}
