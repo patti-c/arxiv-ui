@@ -1,8 +1,8 @@
 from flask import Flask, jsonify, request
 import requests
 import feedparser
-from util.decorators import handles_exceptions_gracefully
-from util.constants import ARXIV_BULK_URL_BASE, ARTICLES_SEARCH, INDEX_TEXT, ARXIV_BASIC_URL_BASE
+from .util.decorators import handles_exceptions_gracefully
+from .util.constants import ARXIV_BULK_URL_BASE, ARTICLES_SEARCH, INDEX_TEXT, ARXIV_BASIC_URL_BASE
 from time import sleep
 from dateutil import parser
 from datetime import datetime
