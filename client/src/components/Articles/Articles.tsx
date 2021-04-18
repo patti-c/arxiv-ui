@@ -12,8 +12,6 @@ function Articles() {
 			.then(setArticles)
 	}, []);
 
-	console.log(articles)
-
 	return (
 		<div>
 			<h1 style={{"textAlign": "center"}}>Articles</h1>
